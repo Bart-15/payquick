@@ -1,6 +1,6 @@
 import { axiosInstance } from '@/shared/lib/axios-instance';
 
-import { LoginResponse } from '../types/auth-service';
+import { LoginResponse } from '../types/auth-service.types';
 import { LoginFormData } from '../validations/login.validation';
 
 export const login = async (payload: LoginFormData) => {
