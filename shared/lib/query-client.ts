@@ -7,11 +7,11 @@ export function generateQueryClient(): QueryClient {
         refetchOnMount: false,
         refetchOnWindowFocus: false,
         refetchOnReconnect: false,
-        staleTime: 5 * (60 * 1000), // 5 mins,
+        staleTime: 5 * (60 * 1000), // 5 mins, it depends
         refetchInterval: 6 * (60 * 1000), // 6 mins
       },
     },
-  }); // and other config here
+  }); // soon, will edit the global config
 }
 
 export const queryClient = generateQueryClient();
