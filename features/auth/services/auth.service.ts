@@ -8,3 +8,10 @@ export const login = async (payload: LoginFormData) => {
 
   return data;
 };
+
+export const refreshAccessToken = async (refreshToken: string) => {
+  const { data } = await axiosInstance.post<LoginResponse>('/token/refresh', {
+    refresh_token: refreshToken,
+  });
+  return data;
+};
