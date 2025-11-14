@@ -12,8 +12,12 @@ const saveAuthSession = (data: LoginResponse['data']) => {
   );
 };
 
-const getAuthSession = () => {
-  const auth = sessionStorage.getItem('auth');
+const getAuthSession = ():
+  | (LoginResponse['data'] & { expires_at: number })
+  | null => {
+  if (typeof window === 'undefined') return null;
+
+  const auth = sessionStorage?.getItem('auth');
 
   if (!auth) return null;
 
