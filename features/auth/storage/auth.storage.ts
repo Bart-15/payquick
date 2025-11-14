@@ -1,4 +1,4 @@
-import { LoginResponse } from '../types/auth-service';
+import { LoginResponse } from '../types/auth-service.types';
 
 const saveAuthSession = (data: LoginResponse['data']) => {
   const expiresAt = Date.now() + data.expires_in * 1000; // convert seconds → ms
