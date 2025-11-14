@@ -1,6 +1,6 @@
 import { axiosInstance } from '@/shared/lib/axios-instance';
 
-import type { TransactionsResponse } from '../types';
+import type { TransactionsResponse } from '../types/transactions.types';
 
 interface FetchTransactionsParams {
   page: number;
