@@ -21,7 +21,10 @@ describe('TransactionCard', () => {
     expect(screen.getByText('$10.00')).toBeInTheDocument();
     expect(screen.getByText('SUCCESS')).toBeInTheDocument();
     expect(screen.getByText('1')).toBeInTheDocument();
-    expect(screen.getByText('Nov 15, 2025, 8:00 PM')).toBeInTheDocument();
+    // Use regex to match date format regardless of timezone
+    expect(
+      screen.getByText(/Nov 15, 2025, \d{1,2}:\d{2} [AP]M/),
+    ).toBeInTheDocument();
   });
 
   it('should render correctly when amount in cents and currency has no value', () => {
