@@ -1,15 +1,11 @@
+import { format } from 'date-fns';
+
 import type { Transaction } from '../types/transactions.types';
 
 export function TransactionCard({ txn }: { txn: Transaction }) {
   const amount = (txn.amount_in_cents / 100).toFixed(2);
 
-  const date = new Date(txn.created_at).toLocaleString('en-US', {
-    month: 'short',
-    day: 'numeric',
-    year: 'numeric',
-    hour: 'numeric',
-    minute: '2-digit',
-  });
+  const date = format(new Date(txn.created_at), 'MMM d, yyyy, h:mm aa');
 
   return (
     <div className="w-full rounded-2xl border border-gray-200 bg-white p-6 shadow-md">
