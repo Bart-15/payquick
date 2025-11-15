@@ -1,6 +1,6 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { JSX, ReactNode } from 'react';
-import type { UseFormProps } from 'react-hook-form';
+import type { FieldValues, UseFormProps } from 'react-hook-form';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import { AuthProvider } from '@/providers/auth-provider';
@@ -12,12 +12,14 @@ type WrapperProps = {
 /* ------------------------------------------
  * React Hook Form Wrapper Factory
  * ------------------------------------------ */
-export const createFormProviderWrapper = (formConfig: UseFormProps) => {
-  return function FormProviderWrapper({ children }: WrapperProps) {
-    const methods = useForm(formConfig);
+export function createFormProviderWrapper<T extends FieldValues>(
+  props: UseFormProps<T>,
+) {
+  return function Wrapper({ children }: { children: React.ReactNode }) {
+    const methods = useForm<T>(props);
     return <FormProvider {...methods}>{children}</FormProvider>;
   };
-};
+}
 
 /* ------------------------------------------
  * Auth Provider Wrapper Factory
