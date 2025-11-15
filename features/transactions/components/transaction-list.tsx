@@ -78,7 +78,16 @@ const TransactionList = () => {
           <h3 className="mb-2 text-xl font-semibold">{month}</h3>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             {txns.map((txn) => (
-              <TransactionCard key={txn.id} txn={txn} />
+              <TransactionCard
+                key={txn.id}
+                id={txn.id}
+                type={txn.type}
+                amount_in_cents={txn.amount_in_cents}
+                currency={txn.currency}
+                status={txn.status}
+                destination_id={txn.destination_id}
+                created_at={txn.created_at}
+              />
             ))}
           </div>
         </div>

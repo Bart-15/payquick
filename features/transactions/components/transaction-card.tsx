@@ -3,8 +3,8 @@ import { format } from 'date-fns';
 type TransactionCardProps = {
   id: string;
   type: string;
-  amount_in_cents: number;
-  currency: string;
+  amount_in_cents?: number;
+  currency?: string;
   status: string;
   destination_id: string;
   created_at: string;
