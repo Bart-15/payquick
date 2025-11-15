@@ -21,7 +21,7 @@ export const NavBar = () => {
 
   return (
     <nav className="flex w-full items-center justify-between bg-white px-6 py-4 shadow-md">
-      <div className="text-lg font-semibold">Quick Pay</div>
+      <h1 className="text-lg font-semibold">PayQuick</h1>
       <div className="flex items-center gap-4">
         <span className="text-gray-700">Hi, {user?.full_name}</span>
         <Button
