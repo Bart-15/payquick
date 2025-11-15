@@ -22,7 +22,16 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       setAuthSession(storedAuth);
     }
 
+    // Initial load
     init();
+
+    // Listen for storage changes
+    const handleStorageChange = () => {
+      init();
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
   }, []);
 
   return (
