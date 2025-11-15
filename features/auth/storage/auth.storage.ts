@@ -10,6 +10,9 @@ const saveAuthSession = (data: LoginResponse['data']) => {
       expires_at: expiresAt,
     }),
   );
+
+  // Dispatch storage event for the same window
+  window.dispatchEvent(new Event('storage'));
 };
 
 const getAuthSession = ():
