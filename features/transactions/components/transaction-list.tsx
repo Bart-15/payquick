@@ -9,7 +9,6 @@ import { TransactionCard } from './transaction-card';
 const TransactionList = () => {
   const {
     data,
-    error,
     isError,
     isLoading,
     fetchNextPage,
