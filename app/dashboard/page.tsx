@@ -8,9 +8,5 @@ export const metadata: Metadata = {
 };
 
 export default function DashboardPage() {
-  return (
-    <div className="">
-      <TransactionList />
-    </div>
-  );
+  return <TransactionList />;
 }
