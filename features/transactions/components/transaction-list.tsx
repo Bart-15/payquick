@@ -62,9 +62,7 @@ const TransactionList = () => {
 
       {/* --- Error state --- */}
       {isError && (
-        <p className="text-center text-red-500">
-          Failed to load transactions: {error?.message}
-        </p>
+        <p className="text-center text-red-500">Failed to load transactions</p>
       )}
 
       {/* --- Empty state --- */}
