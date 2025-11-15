@@ -12,7 +12,7 @@ export function AuthLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const protectedRoutes = ['/dashboard']; // add more as needed
   const showNavbar = protectedRoutes.some((route) =>
-    pathname.startsWith(route),
+    pathname?.startsWith(route),
   );
 
   return (
