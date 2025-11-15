@@ -1,10 +1,10 @@
-import { LoginResponse } from '../types/auth-service.types';
+import type { LoginResponse } from '../types/auth-service.types';
 
 const saveAuthSession = (data: LoginResponse['data']) => {
   const expiresAt = Date.now() + data.expires_in * 1000; // convert seconds → ms
 
   sessionStorage.setItem(
-    'auth',
+    'authSession',
     JSON.stringify({
       ...data,
       expires_at: expiresAt,
@@ -17,15 +17,15 @@ const getAuthSession = ():
   | null => {
   if (typeof window === 'undefined') return null;
 
-  const auth = sessionStorage?.getItem('auth');
+  const authSession = sessionStorage?.getItem('authSession');
 
-  if (!auth) return null;
+  if (!authSession) return null;
 
-  return JSON.parse(auth);
+  return JSON.parse(authSession);
 };
 
 const removeAuthSession = () => {
-  sessionStorage.removeItem('auth');
+  sessionStorage.removeItem('authSession');
 };
 
 export const authStorage = {
