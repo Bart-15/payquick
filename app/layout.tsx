@@ -18,8 +18,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Quick Pay',
-  description: 'Quick Pay',
+  title: 'PayQuick',
+  description:
+    'A web app that allows users to send and receive money securely.',
 };
 
 export default function RootLayout({
