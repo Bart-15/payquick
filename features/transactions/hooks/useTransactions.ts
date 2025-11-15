@@ -1,12 +1,17 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { useEffect, useState } from 'react';
 
-import { authStorage } from '@/features/auth/storage/auth.storage';
 import { useAuth } from '@/providers/auth-provider';
 import { QUERY_KEYS } from '@/shared/constants/const';
 
 import { fetchTransactions } from '../services/transactions.service';
 
+/**
+ * Hook for fetching paginated transactions
+ * @param {number} limit - Number of transactions per page (default: 5)
+ * @returns {UseInfiniteQueryResult} Infinite query result with transaction data and pagination
+ * @example
+ * const { data, fetchNextPage, hasNextPage } = useTransactions(10)
+ */
 export const useTransactions = (limit = 5) => {
   const { authSession } = useAuth();
 

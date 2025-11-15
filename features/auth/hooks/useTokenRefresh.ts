@@ -10,6 +10,12 @@ import { refreshAccessToken } from '../services/auth.service';
 
 let refreshTimeout: NodeJS.Timeout;
 
+/**
+ * Hook for managing automatic token refresh
+ * Schedules token refresh 5 seconds before expiration
+ * Handles token refresh failure by logging out user
+ * Cleans up refresh timer on unmount
+ */
 export const useTokenRefresh = () => {
   const router = useRouter();
 

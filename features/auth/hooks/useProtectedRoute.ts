@@ -6,6 +6,11 @@ import { setHeaderToken } from '@/shared/lib/axios-instance';
 
 import { useTokenRefresh } from './useTokenRefresh';
 
+/**
+ * Hook for protecting routes that require authentication
+ * Automatically redirects to login if user is not authenticated
+ * Initiates token refresh cycle for authenticated users
+ */
 export const useProtectedRoute = () => {
   const router = useRouter();
   useTokenRefresh(); // start token refresh cycle

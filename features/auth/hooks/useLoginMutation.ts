@@ -8,6 +8,13 @@ import { setHeaderToken } from '@/shared/lib/axios-instance';
 import { login } from '../services/auth.service';
 import { authStorage } from '../storage/auth.storage';
 
+/**
+ * Hook for handling user login mutation
+ * @returns {UseMutationResult} Mutation object for login with success/error handlers
+ * @example
+ * const { mutate } = useLoginMutation()
+ * mutate({ email: 'user@example.com', password: '123456' })
+ */
 export const useLoginMutation = () => {
   const router = useRouter();
 
