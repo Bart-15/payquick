@@ -32,12 +32,14 @@ const LoginForm = () => {
             type="email"
             id="email"
             name="email"
+            label="Email"
             placeholder="Enter your email"
           />
           <Input
             type="password"
             id="password"
             name="password"
+            label="Password"
             placeholder="Enter your password"
           />
 
