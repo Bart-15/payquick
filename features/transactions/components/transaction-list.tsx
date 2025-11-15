@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { format } from 'date-fns';
+import { useEffect, useMemo, useRef } from 'react';
 
 import { useTransactions } from '../hooks/useTransactions';
 import { TransactionCard } from './transaction-card';
@@ -31,12 +32,28 @@ const TransactionList = () => {
     return () => observer.disconnect();
   }, [hasNextPage, fetchNextPage]);
 
-  // Flatten pages safely
-  const items = data?.pages.flatMap((page) => page?.data ?? []) ?? [];
+  // Flatten pages
+  const items = useMemo(() => {
+    return data?.pages.flatMap((page) => page?.data ?? []) ?? [];
+  }, [data?.pages]);
+
+  // Group transactions by month
+  const groupedByMonth = useMemo(() => {
+    const groups: Record<string, typeof items> = {};
+
+    items.forEach((txn) => {
+      const month = format(new Date(txn.created_at), 'MMMM yyyy');
+
+      if (!groups[month]) groups[month] = [];
+      groups[month].push(txn);
+    });
+
+    return groups;
+  }, [items]);
 
   return (
-    <section className="mx-auto my-4 max-w-5xl space-y-4 px-6">
-      <h2 className="mb-4 text-lg font-semibold">Transactions</h2>
+    <section className="mx-auto my-4 max-w-5xl space-y-6 px-6">
+      <h2 className="mb-4 text-4xl font-semibold">Transactions</h2>
 
       {/* --- Loading state --- */}
       {isLoading && (
@@ -55,12 +72,17 @@ const TransactionList = () => {
         <p className="text-center text-gray-500">No transactions found.</p>
       )}
 
-      {/* --- Transactions list --- */}
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {items.map((txn) => (
-          <TransactionCard key={txn.id} txn={txn} />
-        ))}
-      </div>
+      {/* --- Transactions grouped by month --- */}
+      {Object.entries(groupedByMonth).map(([month, txns]) => (
+        <div key={month} className="mb-6">
+          <h3 className="mb-2 text-xl font-semibold">{month}</h3>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            {txns.map((txn) => (
+              <TransactionCard key={txn.id} txn={txn} />
+            ))}
+          </div>
+        </div>
+      ))}
 
       {/* Infinite scroll trigger */}
       <div ref={loadMoreRef} className="flex h-10 items-center justify-center">
