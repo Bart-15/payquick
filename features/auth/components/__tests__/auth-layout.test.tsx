@@ -30,7 +30,7 @@ describe('AuthLayout', () => {
     (useRouter as jest.Mock).mockReturnValue(mockRouter);
   });
 
-  it('should render children properly', () => {
+  it('should render children correctly', () => {
     const { container } = render(<AuthLayout>Test</AuthLayout>);
     expect(container).toHaveTextContent('Test');
   });

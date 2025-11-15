@@ -40,7 +40,7 @@ describe('LoginForm', () => {
     jest.clearAllMocks();
   });
 
-  it('should render the login form properly', () => {
+  it('should render the login form correctly', () => {
     render(<LoginForm />, { wrapper });
 
     const heading = screen.getByRole('heading', { name: 'Login' });
