@@ -3,6 +3,7 @@ import { useRouter } from 'next/navigation';
 
 import { authStorage } from '@/features/auth/storage/auth.storage';
 import { setHeaderToken } from '@/shared/lib/axios-instance';
+import { createAuthProviderWrapper } from '@/shared/testing/wrappers/test-wrappers';
 
 import { refreshAccessToken } from '../../services/auth.service';
 import { useTokenRefresh } from '../useTokenRefresh';
@@ -30,6 +31,11 @@ jest.mock('@/shared/lib/axios-instance', () => ({
 describe('useTokenRefresh', () => {
   const routerPush = jest.fn();
 
+  const renderUseTokenRefresh = () =>
+    renderHook(() => useTokenRefresh(), {
+      wrapper: createAuthProviderWrapper(),
+    });
+
   beforeEach(() => {
     jest.clearAllMocks();
     jest.useFakeTimers(); // fake timers for setTimeout
@@ -51,7 +57,7 @@ describe('useTokenRefresh', () => {
       expires_at: expiresAt,
     });
 
-    renderHook(() => useTokenRefresh());
+    renderUseTokenRefresh();
 
     // expect setTimeout called with 10s - 5s = 5000ms
     expect(setTimeout).toHaveBeenCalledWith(expect.any(Function), 5000);
@@ -74,7 +80,7 @@ describe('useTokenRefresh', () => {
     (authStorage.getAuthSession as jest.Mock).mockReturnValue(oldSession);
     (refreshAccessToken as jest.Mock).mockResolvedValue({ data: newSession });
 
-    renderHook(() => useTokenRefresh());
+    renderUseTokenRefresh();
 
     // trigger refresh
     await act(async () => {
@@ -103,7 +109,7 @@ describe('useTokenRefresh', () => {
     (authStorage.getAuthSession as jest.Mock).mockReturnValue(session);
     (refreshAccessToken as jest.Mock).mockResolvedValue({ data: null });
 
-    renderHook(() => useTokenRefresh());
+    renderUseTokenRefresh();
 
     await act(async () => {
       jest.runOnlyPendingTimers();
@@ -127,7 +133,7 @@ describe('useTokenRefresh', () => {
     (authStorage.getAuthSession as jest.Mock).mockReturnValue(session);
     (refreshAccessToken as jest.Mock).mockRejectedValue(new Error('fail'));
 
-    renderHook(() => useTokenRefresh());
+    renderUseTokenRefresh();
 
     await act(async () => {
       jest.runOnlyPendingTimers();

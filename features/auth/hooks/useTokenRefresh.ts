@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
 import { authStorage } from '@/features/auth/storage/auth.storage';
+import { useAuth } from '@/providers';
 import { setHeaderToken } from '@/shared/lib/axios-instance';
 
 import { refreshAccessToken } from '../services/auth.service';
@@ -17,11 +18,12 @@ let refreshTimeout: NodeJS.Timeout;
  * Cleans up refresh timer on unmount
  */
 export const useTokenRefresh = () => {
+  const auth = useAuth();
   const router = useRouter();
 
+  const currentAuth = auth.authSession;
   useEffect(() => {
     const scheduleTokenRefresh = () => {
-      const currentAuth = authStorage.getAuthSession(); // always get latest auth
       if (!currentAuth || !currentAuth.expires_at) return;
 
       const now = Date.now();
@@ -64,5 +66,5 @@ export const useTokenRefresh = () => {
 
     // Cleanup timer on unmount
     return () => clearTimeout(refreshTimeout);
-  }, [router]);
+  }, [router, currentAuth]);
 };
