@@ -10,13 +10,14 @@ import { removeHeaderToken } from '@/shared/lib/axios-instance';
 export const NavBar = () => {
   const router = useRouter();
 
-  const { authSession } = useAuth();
+  const { authSession, setAuthSession } = useAuth();
   const user = authSession?.user;
 
   function handleLogout() {
     authStorage.removeAuthSession();
     removeHeaderToken();
     router.push('/login');
+    setAuthSession(null);
   }
 
   return (
