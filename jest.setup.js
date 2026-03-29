@@ -8,6 +8,10 @@ import 'whatwg-fetch';
 
 import { server } from './mocks/server';
 
+// Set environment variables for tests
+process.env.NEXT_PUBLIC_BASE_URL = 'http://localhost:3000';
+process.env.NEXT_PUBLIC_API_VERSION = 'api/v1';
+
 // Mock window.matchMedia
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
