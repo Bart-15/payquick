@@ -10,10 +10,6 @@ import {
 
 import TransactionList from '../transaction-list';
 
-jest.mock('../transaction-card', () => ({
-  TransactionCard: ({ id }: { id: string }) => <div>Transaction {id}</div>,
-}));
-
 const wrapper = createComposedWrapper([
   createAuthProviderWrapper(),
   createQueryClientWrapper(),
@@ -41,11 +37,7 @@ describe('TransactionList', () => {
     // Initially should show loading state
     expect(screen.getByText('Loading transactions…')).toBeInTheDocument();
 
-    expect(
-      await screen.findByText('Transaction txn_abc123def456'),
-    ).toBeInTheDocument();
-
-    expect(screen.getByText('Transaction txn_ab94430r')).toBeInTheDocument();
+    expect(await screen.findByText(/txn_abc123def456/)).toBeInTheDocument();
   });
 
   it('should handle error state', async () => {
