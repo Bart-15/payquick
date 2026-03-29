@@ -20,7 +20,11 @@ const LoginForm = () => {
   });
 
   const onSubmit = async (data: LoginFormData) => {
-    await loginMutation.mutateAsync(data);
+    try {
+      await loginMutation.mutateAsync(data);
+    } catch (error) {
+      // Error is handled by onError callback in useLoginMutation
+    }
   };
 
   return (

@@ -39,6 +39,10 @@ const allData = [
 ];
 
 export const handlers = [
+  http.options('http://localhost:3000/api/v1/login', () => {
+    return new HttpResponse(null, { status: 200 });
+  }),
+
   http.get('http://localhost:3000/api/v1/transactions', ({ request }) => {
     const url = new URL(request.url);
     const page = Number(url.searchParams.get('page') ?? 1);
@@ -59,5 +63,38 @@ export const handlers = [
         items_per_page: limit,
       },
     });
+  }),
+
+  http.post('http://localhost:3000/api/v1/login', async ({ request }) => {
+    const body = (await request.json()) as {
+      email: string;
+      password: string;
+    };
+
+    const { email, password } = body;
+
+    // 🔐 simple validation logic
+    if (email === 'smith@example.com' && password === 'pass123') {
+      return HttpResponse.json({
+        status: 'success',
+        message: 'Authentication successful',
+        data: {
+          access_token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.mock-token',
+          expires_in: 60,
+          refresh_token: 'rft_0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d',
+          token_type: 'Bearer',
+          user: {
+            user_id: 'usr_a1b2c3d4e5f6',
+            full_name: 'Paul Smith',
+            email: 'smith@example.com',
+          },
+        },
+      });
+    }
+
+    return HttpResponse.json(
+      { message: 'Invalid credentials' },
+      { status: 401 },
+    );
   }),
 ];
