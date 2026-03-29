@@ -21,8 +21,6 @@ const wrapper = createComposedWrapper([
 
 describe('TransactionList', () => {
   beforeEach(() => {
-    process.env.NEXT_PUBLIC_BASE_URL = 'http://localhost:3000/';
-    process.env.NEXT_PUBLIC_API_VERSION = 'api/v1'; // optional if version is empty
     sessionStorage.setItem(
       'authSession',
       JSON.stringify({
@@ -37,14 +35,16 @@ describe('TransactionList', () => {
     sessionStorage.clear();
   });
 
-  it('shows loading then transactions (success)', async () => {
+  it('should render loading and transaction list correctly', async () => {
     render(<TransactionList />, { wrapper });
 
-    expect(screen.getByText(/Loading transactions…/i)).toBeInTheDocument();
+    // Initially should show loading state
+    expect(screen.getByText('Loading transactions…')).toBeInTheDocument();
 
     expect(
       await screen.findByText('Transaction txn_abc123def456'),
     ).toBeInTheDocument();
+
     expect(screen.getByText('Transaction txn_ab94430r')).toBeInTheDocument();
   });
 
@@ -60,10 +60,7 @@ describe('TransactionList', () => {
 
     render(<TransactionList />, { wrapper });
 
-    // Loading
-    expect(screen.getByText(/Loading transactions…/i)).toBeInTheDocument();
-
-    // Error
+    // Error should eventually appear
     await waitFor(() =>
       expect(
         screen.getByText(/Failed to load transactions/i),
