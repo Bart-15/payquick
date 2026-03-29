@@ -39,6 +39,7 @@ export const createQueryClientWrapper = (customClient?: QueryClient) => {
     new QueryClient({
       defaultOptions: {
         queries: { retry: false },
+        mutations: { retry: false },
       },
     });
 
