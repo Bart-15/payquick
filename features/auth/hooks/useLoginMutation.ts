@@ -22,10 +22,10 @@ export const useLoginMutation = () => {
     mutationFn: login,
 
     onSuccess: (data) => {
-      const authUser = data?.data;
+      const authUser = data.data;
       authStorage.saveAuthSession(authUser);
       toast.success('Login successful');
-      setHeaderToken(authUser?.access_token);
+      setHeaderToken(authUser.access_token);
       router.push('/dashboard');
     },
 

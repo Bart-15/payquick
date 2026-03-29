@@ -72,8 +72,8 @@ describe('LoginForm', () => {
     const emailInput = screen.getByRole('textbox', { name: 'Email' });
     const passwordInput = screen.getByLabelText('Password');
 
-    await userEvent.type(emailInput, 'test@example.com');
-    await userEvent.type(passwordInput, 'password');
+    await userEvent.type(emailInput, 'smith@example.com');
+    await userEvent.type(passwordInput, 'pass123');
 
     const loginButton = screen.getByRole('button', { name: 'Login' });
     await userEvent.click(loginButton);
